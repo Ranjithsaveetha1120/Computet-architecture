@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+// Function to perform Booth's algorithm for binary multiplication
+int boothMultiplication(int multiplicand, int multiplier) {
+    int product = 0;
+    int accumulator = 0;
+    int multiplierBit, lastMultiplierBit = 0;
+
+    for (int i = 0; i < 32; i++) {
+        multiplierBit = multiplier & 1;
+        
+        if (multiplierBit == 1 && lastMultiplierBit == 0) {
+            accumulator += multiplicand;
+        } else if (multiplierBit == 0 && lastMultiplierBit == 1) {
+            accumulator -= multiplicand;
+        }
+
+        if ((accumulator & 1) == 0) {
+            product = (product >> 1) | (multiplierBit << 31);
+        } else {
+            product = (product >> 1) | (1 << 31);
+        }
+
+        multiplier >>= 1;
+        lastMultiplierBit = multiplierBit;
+    }
+
+    return product;
+}
+
+int main() {
+    int multiplicand = 5;
+    int multiplier = 3;
+
+    int result = boothMultiplication(multiplicand, multiplier);
+
+    printf("Multiplication result: %d\n", result);
+
+    return 0;
+}
