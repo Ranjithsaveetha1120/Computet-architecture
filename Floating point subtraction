@@ -1,0 +1,12 @@
+#include <stdio.h>
+
+int main() {
+    float num1 = 5.7f;
+    float num2 = 2.3f;
+
+    float result = num1 - num2;
+
+    printf("Subtraction result: %f\n", result);
+
+    return 0;
+}
