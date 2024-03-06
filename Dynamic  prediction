@@ -1,0 +1,66 @@
+#include <stdio.h>
+
+// Instruction set
+#define BRANCH_INSTRUCTION 1
+#define NON_BRANCH_INSTRUCTION 0
+
+// Dynamic branch prediction structures
+#define HISTORY_TABLE_SIZE 16
+int globalHistoryRegister = 0;
+int historyTable[HISTORY_TABLE_SIZE] = {0};
+
+// Dynamic branch prediction function
+int predictBranch() {
+    int index = globalHistoryRegister % HISTORY_TABLE_SIZE;
+    return historyTable[index] >= 2; // Predict taken if the counter is 2 or more
+}
+
+// Update dynamic branch prediction based on the actual outcome
+void updatePrediction(int outcome) {
+    int index = globalHistoryRegister % HISTORY_TABLE_SIZE;
+    
+    if (outcome) {
+        if (historyTable[index] < 3) {
+            historyTable[index]++;
+        }
+    } else {
+        if (historyTable[index] > 0) {
+            historyTable[index]--;
+        }
+    }
+}
+
+// Function to simulate execution
+void executeInstruction(int instruction, int branchOutcome) {
+    if (instruction == BRANCH_INSTRUCTION) {
+        int predictedOutcome = predictBranch();
+        printf("Predicted outcome: %d\n", predictedOutcome);
+
+        // Perform actions based on prediction
+        if (predictedOutcome == branchOutcome) {
+            printf("Branch prediction correct.\n");
+        } else {
+            printf("Branch prediction incorrect.\n");
+        }
+
+        // Update dynamic branch prediction based on the actual outcome
+        updatePrediction(branchOutcome);
+    } else {
+        printf("Non-branch instruction.\n");
+        // Perform actions for non-branch instructions
+    }
+}
+
+int main() {
+    // Simulating a program with branch and non-branch instructions
+    int program[] = {BRANCH_INSTRUCTION, BRANCH_INSTRUCTION, NON_BRANCH_INSTRUCTION, BRANCH_INSTRUCTION, NON_BRANCH_INSTRUCTION};
+    int branchOutcomes[] = {1, 0, 0, 1, 1}; // Actual outcomes for each branch instruction
+
+    // Execute the program
+    for (int i = 0; i < sizeof(program) / sizeof(program[0]); i++) {
+        executeInstruction(program[i], branchOutcomes[i]);
+        globalHistoryRegister = (globalHistoryRegister << 1) | branchOutcomes[i];
+    }
+
+    return 0;
+}
