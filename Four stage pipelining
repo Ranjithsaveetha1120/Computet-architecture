@@ -1,0 +1,60 @@
+#include <stdio.h>
+
+// Instruction set
+#define ADD 1
+#define SUBTRACT 2
+#define HALT 0
+
+// Pipeline registers
+int instructionFetchStage = -1;  // Initialize with an invalid instruction
+int instructionDecodeStage = -1;
+int executionStage = -1;
+int writeBackStage = -1;
+
+// Memory
+int program[] = {ADD, 5, SUBTRACT, 3, HALT};
+
+// Functions to simulate pipeline stages
+void fetch() {
+    instructionFetchStage = program[instructionWriteBackStage + 1];
+}
+
+void decode() {
+    instructionDecodeStage = instructionFetchStage;
+}
+
+void execute() {
+    executionStage = instructionDecodeStage;
+    switch (executionStage) {
+        case ADD:
+            printf("Executing ADD instruction\n");
+            // Add execution logic here
+            break;
+        case SUBTRACT:
+            printf("Executing SUBTRACT instruction\n");
+            // Subtract execution logic here
+            break;
+        case HALT:
+            printf("Program halted.\n");
+            break;
+        default:
+            printf("Unknown instruction: %d\n", executionStage);
+            break;
+    }
+}
+
+void writeBack() {
+    writeBackStage = executionStage;
+}
+
+int main() {
+    while (instructionWriteBackStage != HALT) {
+        // Pipeline stages
+        fetch();
+        decode();
+        execute();
+        writeBack();
+    }
+
+    return 0;
+}
