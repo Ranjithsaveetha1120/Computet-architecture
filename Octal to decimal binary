@@ -1,0 +1,42 @@
+#include <stdio.h>
+
+// Function to convert octal to decimal
+int octalToDecimal(int octalNumber) {
+    int decimalNumber = 0, base = 1, remainder;
+
+    while (octalNumber != 0) {
+        remainder = octalNumber % 10;
+        decimalNumber += remainder * base;
+        octalNumber /= 10;
+        base *= 8;
+    }
+
+    return decimalNumber;
+}
+
+// Function to convert octal to binary
+long long octalToBinary(int octalNumber) {
+    int decimalNumber = octalToDecimal(octalNumber);
+    long long binaryNumber = 0, base = 1;
+
+    while (decimalNumber != 0) {
+        int remainder = decimalNumber % 2;
+        binaryNumber += remainder * base;
+        decimalNumber /= 2;
+        base *= 10;
+    }
+
+    return binaryNumber;
+}
+
+int main() {
+    int octalNumber;
+
+    // Input octal number
+    printf("Enter an octal number: ");
+    scanf("%o", &octalNumber);
+
+    // Convert to decimal and binary, and print the results
+    printf("Decimal: %d\n", octalToDecimal(octalNumber));
+    printf("Binary: %lld\n", octalTo
+ 
