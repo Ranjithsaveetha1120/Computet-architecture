@@ -1,0 +1,50 @@
+#include <stdio.h>
+
+// Memory
+#define MEMORY_SIZE 256
+int memory[MEMORY_SIZE];
+
+// CPU Registers
+int dataBus = 0;
+int addressBus = 0;
+int instructionRegister = 0;
+int programCounter = 0;
+
+// Functions to simulate instructions
+void loadInstruction(int address) {
+    addressBus = address;
+    dataBus = memory[addressBus];
+    instructionRegister = dataBus;
+}
+
+void executeInstruction() {
+    switch (instructionRegister) {
+        case 0:  // Halt
+            printf("Program halted.\n");
+            break;
+        case 1:  // Add
+            dataBus += memory[programCounter];
+            break;
+        // Add more instructions as needed
+        default:
+            printf("Unknown instruction: %d\n", instructionRegister);
+            break;
+    }
+}
+
+int main() {
+    // Load a simple program into memory
+    memory[0] = 1;  // Add
+    memory[1] = 5;  // Operand
+
+    memory[2] = 0;  // Halt
+
+    // Execute the program
+    while (instructionRegister != 0) {
+        loadInstruction(programCounter);
+        executeInstruction();
+        programCounter++;
+    }
+
+    return 0;
+}
