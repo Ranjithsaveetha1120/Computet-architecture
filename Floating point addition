@@ -1,0 +1,12 @@
+#include <stdio.h>
+
+int main() {
+    float num1 = 3.5f;
+    float num2 = 2.8f;
+
+    float result = num1 + num2;
+
+    printf("Addition result: %f\n", result);
+
+    return 0;
+}
