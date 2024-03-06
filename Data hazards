@@ -1,0 +1,46 @@
+#include <stdio.h>
+
+// Instruction set
+#define ADD 1
+#define SUBTRACT 2
+#define LOAD 3
+#define STORE 4
+#define HALT 0
+
+// Pipeline registers
+int instructionFetchStage = -1;  
+int instructionDecodeStage = -1;
+int executionStage = -1;
+int writeBackStage = -1;
+
+// CPU Registers
+int registerFile[16] = {0};  // Assuming 16 registers
+
+// Function to simulate instruction execution
+void executeInstruction(int instruction, int operand1, int operand2, int destination) {
+    switch (instruction) {
+        case ADD:
+            registerFile[destination] = operand1 + operand2;
+            break;
+        case SUBTRACT:
+            registerFile[destination] = operand1 - operand2;
+            break;
+        case LOAD:
+            registerFile[destination] = operand1;
+            break;
+        case STORE:
+            // Simulate storing data in memory
+            break;
+        case HALT:
+            printf("Program halted.\n");
+            break;
+        default:
+            printf("Unknown instruction: %d\n", instruction);
+            break;
+    }
+}
+
+// Function to handle data hazards
+void handleDataHazards(int sourceReg1, int sourceReg2) {
+    // Check if the source registers are modified in the previous stages
+    if
