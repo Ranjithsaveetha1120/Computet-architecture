@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+int divide(int dividend, int divisor) {
+    if (divisor == 0) {
+        printf("Error: Cannot divide by zero\n");
+        return 0; // You can handle this error in your specific way
+    }
+
+    return dividend / divisor;
+}
+
+int main() {
+    int num1 = 20;
+    int num2 = 4;
+
+    int result = divide(num1, num2);
+
+    printf("Division result: %d\n", result);
+
+    return 0;
+}
