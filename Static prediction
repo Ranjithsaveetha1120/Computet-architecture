@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+// Instruction set
+#define BRANCH_INSTRUCTION 1
+#define NON_BRANCH_INSTRUCTION 0
+
+// Static branch prediction function
+int predictBranch() {
+    // Always predict the branch to be taken
+    return 1;
+}
+
+// Function to simulate execution
+void executeInstruction(int instruction) {
+    if (instruction == BRANCH_INSTRUCTION) {
+        int predictedOutcome = predictBranch();
+        if (predictedOutcome) {
+            printf("Branch taken.\n");
+            // Perform actions when branch is taken
+        } else {
+            printf("Branch not taken.\n");
+            // Perform actions when branch is not taken
+        }
+    } else {
+        printf("Non-branch instruction.\n");
+        // Perform actions for non-branch instructions
+    }
+}
+
+int main() {
+    // Simulating a program with branch and non-branch instructions
+    int program[] = {BRANCH_INSTRUCTION, NON_BRANCH_INSTRUCTION, BRANCH_INSTRUCTION, NON_BRANCH_INSTRUCTION};
+
+    // Execute the program
+    for (int i = 0; i < sizeof(program) / sizeof(program[0]); i++) {
+        executeInstruction(program[i]);
+    }
+
+    return 0;
+}
