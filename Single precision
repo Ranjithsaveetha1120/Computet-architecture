@@ -1,0 +1,15 @@
+#include <stdio.h>
+
+int main() {
+    float num1 = 10.0f;
+    float num2 = 3.0f;
+
+    if (num2 != 0.0f) {
+        float result = num1 / num2;
+        printf("Division result: %f\n", result);
+    } else {
+        printf("Error: Cannot divide by zero\n");
+    }
+
+    return 0;
+}
