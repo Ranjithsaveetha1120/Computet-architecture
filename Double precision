@@ -1,0 +1,12 @@
+#include <stdio.h>
+
+int main() {
+    double num1 = 3.14;
+    double num2 = 2.718;
+
+    double result = num1 + num2;
+
+    printf("Addition result: %lf\n", result);
+
+    return 0;
+}
